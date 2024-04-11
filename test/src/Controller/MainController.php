@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use function PHPUnit\Framework\throwException;
 
 class MainController extends AbstractController
@@ -21,7 +22,7 @@ class MainController extends AbstractController
      */
     public function index(Request $request){
 
-        return $this->render('test/test.htm.twig');
+        return $this->render('test/test.html.twig');
     }
 
     /**
@@ -36,16 +37,41 @@ class MainController extends AbstractController
         $name = $request->get('name');
         $email = $request->get('email');
         $message = $request->get('message');
-
+       
         $contact = new Contact();
         $contact->setName($name);
         $contact->setEmail($email);
         $contact->setMessage($message);
 
         if($contactService->registerContact($contact)){
-            return $this->redirect($this->generateUrl('testo_index'));
+           return $this->redirect($this->generateUrl('testo_index'));
+            
+            
         }
 
         return $this->render('test/errore.html.twig');
+    }
+/**
+     * @Route("/contact", name="testo_index", methods={"GET"})
+     */
+    public function testo_index()
+    {
+       
+
+         return new Response('Invio email andato a buon fine');
+    }
+    /**
+     * @Route("/message", name="storico_messaggi", methods={"GET"})
+     */
+    public function storico_messaggi(ContactService $contactService): Response
+    {
+       
+
+        
+            $messages = $contactService->findAllOrderedByCreatedAt();
+    
+            return $this->render('test/storico.html.twig', [
+                'messages' => $messages,
+            ]);
     }
 }
