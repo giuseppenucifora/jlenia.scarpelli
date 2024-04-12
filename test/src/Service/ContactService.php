@@ -35,20 +35,5 @@ class ContactService extends ServiceEntityRepository
             throw $exception;
         }
     }
-    /**
-     * @return Message[]
-     */
-    public function findAllOrderedByCreatedAt(): array
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-        $queryBuilder->select('m')
-                     ->from('App\Entity\Contact', 'm')
-                    ->orderBy('m.name', 'ASC');
-
-        $query = $queryBuilder->getQuery();
-        $messages = $query->getResult();
-
-        return $messages;
-    }
-
+    
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Repository\ContactRepository;
 use App\Service\ContactService;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,12 +64,12 @@ class MainController extends AbstractController
     /**
      * @Route("/message", name="storico_messaggi", methods={"GET"})
      */
-    public function storico_messaggi(ContactService $contactService): Response
+    public function storico_messaggi(ContactRepository $contactRepository): Response
     {
        
 
         
-            $messages = $contactService->findAllOrderedByCreatedAt();
+            $messages = $contactRepository->findAllOrderedByName();
     
             return $this->render('test/storico.html.twig', [
                 'messages' => $messages,
