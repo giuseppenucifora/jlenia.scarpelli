@@ -1,0 +1,24 @@
+{% block body %}
+    <h1>Storico messaggi</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome mittente</th>
+                <th>Email</th>
+                <th>Messaggio</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>{{ message.name }}</td>
+                    <td>{{ message.email }}</td>
+                    <td>{{ message.message }}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

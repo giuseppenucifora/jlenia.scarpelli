@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ContactService
+class ContactService extends ServiceEntityRepository
 {
     private EntityManagerInterface $entityManager;
 
@@ -24,11 +26,15 @@ class ContactService
     {
         try {
             $this->entityManager->persist($contact);
-            $this->entityManager->save();
+            //$this->entityManager->save();
+            $this->entityManager->flush();
+
 
             return true;
         } catch (\Exception $exception) {
             throw $exception;
         }
     }
+    
+
 }
