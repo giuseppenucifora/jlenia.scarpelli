@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Contact;
+use App\Service\ContactService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,21 +17,24 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class ContactRepository extends ServiceEntityRepository
 {
-    private EntityManagerInterface $entityManager;
+    
 
     
-    public function __construct(ManagerRegistry $registry,EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, \Contact::class);
-        $this->entityManager = $entityManager;
+        parent::__construct($registry, Contact::class);
+       
     }
 
     /**
      * @return messages[]
      */
-   public function findAllOrderedByName(): array
+  public function findAllOrderedByName(): array
+  
     {
-        $queryBuilder = $this->entityManager->createQueryBuilder();
+        
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->createQueryBuilder();
         $queryBuilder->select('m')
                      ->from('App\Entity\Contact', 'm')
                     ->orderBy('m.name', 'ASC');
@@ -40,4 +44,5 @@ class ContactRepository extends ServiceEntityRepository
 
         return $messages;
     }
+    
 }

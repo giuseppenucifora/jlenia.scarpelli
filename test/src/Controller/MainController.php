@@ -55,11 +55,17 @@ class MainController extends AbstractController
 /**
      * @Route("/contact", name="testo_index", methods={"GET"})
      */
+   /*public function testo_index()
+    {
+       
+
+         return new Response('Invio email andato a buon fine</br><a href="/">Torna alla form</a></br><a href="/message">Storico messaggi</a>.');
+    }*/
     public function testo_index()
     {
        
 
-         return new Response('Invio email andato a buon fine');
+         return $this->render('test/risultato_invio.html.twig');
     }
     /**
      * @Route("/message", name="storico_messaggi", methods={"GET"})
